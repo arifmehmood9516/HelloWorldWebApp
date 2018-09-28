@@ -7,6 +7,7 @@ public class Contact implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private int id;
+	private int accountId;
 
 	private String firstName;
 	private String lastName;
@@ -91,5 +92,13 @@ public class Contact implements Serializable {
 
 	public void setAddress(Address address) {
 		this.address = address;
+	}
+
+	public int getAccountId() {
+		return accountId;
+	}
+
+	public void setAccountId(int accountId) {
+		this.accountId = accountId;
 	}
 }

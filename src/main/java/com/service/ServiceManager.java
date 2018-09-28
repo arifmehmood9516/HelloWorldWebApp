@@ -1,42 +1,14 @@
 package com.service;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NameClassPair;
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 
-
 public class ServiceManager {
-	
-/*	public static EmployeeServiceRemote lookupJNDI() {
-		try {
-		InitialContext ctx = new InitialContext();
-		 EmployeeServiceRemote br = (EmployeeServiceRemote) ctx.lookup("java:global/HelloWorldWebApp/EmployeeService!com.service.EmployeeServiceRemote");
-		 return br;
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-			return null;
-		}
-	}
-	public static EmployeeServiceRemote lookupJNDI(String jndi) {
-		try {
-		InitialContext ctx = new InitialContext();
-		 EmployeeServiceRemote br = (EmployeeServiceRemote) ctx.lookup(jndi);
-		 return br;
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-			return null;
-		}
-	}*/
 	
 	public static List<String> toMap(Context ctx) throws NamingException {
 	    String namespace = "java:global/HelloWorldWebApp/";
@@ -85,41 +57,4 @@ public class ServiceManager {
 	}
 	
 	
-	/*public static AccountServiceRemote lookupAccountJNDI() {
-		try {
-		 AccountServiceRemote br =  (AccountServiceRemote) jndiLookup("AccountService");
-				 return br;
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
-	public static AlertProfileServiceRemote lookupAlertProfileJNDI() {
-		try {
-		InitialContext ctx = new InitialContext();
-		AlertProfileServiceRemote br = (AlertProfileServiceRemote) ctx.lookup("java:global/HelloWorldWebApp/AlertProfileService!com.service.AlertProfileServiceRemote");
-		 return br;
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
-	public static AddressServiceRemote lookupAddressJNDI() {
-		try {
-		InitialContext ctx = new InitialContext();
-		AddressServiceRemote br = (AddressServiceRemote) ctx.lookup("java:global/HelloWorldWebApp/AddressService!com.service.AddressServiceRemote");
-		 return br;
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-			return null;
-		}
-	}*/
 }

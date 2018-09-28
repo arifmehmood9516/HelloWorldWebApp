@@ -10,6 +10,7 @@ public class AlertProfile implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 		private int id;
+		private int accountId;
 		private String name;
 		private String city;
 		private String country;
@@ -54,6 +55,14 @@ public class AlertProfile implements Serializable {
 
 		public void setId(int id) {
 			this.id = id;
+		}
+
+		public int getAccountId() {
+			return accountId;
+		}
+
+		public void setAccountId(int accountId) {
+			this.accountId = accountId;
 		}
 		
 

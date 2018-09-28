@@ -6,9 +6,12 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.LogicalExpression;
 import org.hibernate.criterion.Restrictions;
 
 import com.qr.repository.entity.Account;
+import com.qr.repository.entity.Address;
 import com.qr.repository.entity.AlertProfile;
 import com.qr.repository.factory.QrSessionFactory;
 
@@ -37,7 +40,7 @@ public List<AlertProfile> getAll(int accountId) {
 		public Boolean addAlertProfile(AlertProfile alertprofile)
 		{
 			try{
-				int accountID=alertprofile.getId();
+				int accountID=alertprofile.getAccountId();
 				Session session = QrSessionFactory.startTransaction();
 				 Criteria criteria = session.createCriteria(Account.class)
 		                    .add(Restrictions.eq("id", accountID));
@@ -54,6 +57,38 @@ public List<AlertProfile> getAll(int accountId) {
 			
 		}
 
+		@SuppressWarnings("deprecation")
+		public static List<AlertProfile> matchProfile(Address address,int accountId)
+		{
+			Session session = QrSessionFactory.startTransaction();
+			
+		/*	List<AlertProfile> alertprofiles=null;
+			Criteria cr = session.createCriteria(AlertProfile.class);
+			cr.createCriteria("account").add(Restrictions.eq("id", accountId));
+			Criterion city = Restrictions.eq("city", address.getCity());
+	        Criterion country = Restrictions.eq("country", address.getCountry());
+	        LogicalExpression orExp = Restrictions.or(city,country);
+			cr.add(orExp);
+			if(alertprofiles.size()==0){	
+				return alertprofiles;
+				} 
+			else{
+				return alertprofiles;
+				}
+			*/
+			
+			String sql = "SELECT * FROM qr.alertprofile where \r\n" + 
+					"account_id="+accountId+" and \r\n" + 
+					"(city='"+address.getCity()+"' or country='"+address.getCountry()+"');";
+			SQLQuery query = session.createSQLQuery(sql);
+			query.addEntity(AlertProfile.class);
+			List<AlertProfile> results=null;
+			results = query.list();
+			return results;
+			
+			
+		}
+		
 		public Boolean deleteAlertProfile( int profileId)
 		{
 			try {

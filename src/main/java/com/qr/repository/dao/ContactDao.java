@@ -40,7 +40,7 @@ public class ContactDao {
 		try{
 			Session session = QrSessionFactory.startTransaction();
 			 Criteria criteria = session.createCriteria(Account.class)
-	                    .add(Restrictions.eq("id", contact.getId()));
+	                    .add(Restrictions.eq("id", contact.getAccountId()));
 			 Object result = criteria.uniqueResult();
 			 Account account=(Account) result;
 			contact.setAccount(account);

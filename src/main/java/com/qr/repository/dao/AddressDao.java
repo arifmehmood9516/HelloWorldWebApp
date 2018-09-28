@@ -50,7 +50,7 @@ public class AddressDao {
 				address.setContact(contact);
 				session.save(address);
 				Account account= contact.getAccount();
-				alertprofile=matchProfile(address,account.getId(),session);
+				alertprofile=(AlertProfile) AlertProfileDao.matchProfile(address,account.getId());
 				QrSessionFactory.endTransaction(session);
 			}catch (Exception e) {
 				e.printStackTrace();
@@ -59,33 +59,7 @@ public class AddressDao {
 			return alertprofile;
 		}
 		
-		public AlertProfile matchProfile(Address address,int account,Session session)
-		{
-			List<AlertProfile> alertprofile=null;
-			Criteria cr = session.createCriteria(AlertProfile.class);
-			cr.createCriteria("account").add(Restrictions.eq("id", account));
-			cr.add(Restrictions.eq("city", address.getCity()));
-			alertprofile=(List<AlertProfile>) cr.list();
-			try {
-				if(alertprofile.size()==0)
-				{	Criteria crt = session.createCriteria(AlertProfile.class);
-				crt.createCriteria("account").add(Restrictions.eq("id", account));
-				crt.add(Restrictions.eq("country", address.getCountry()));
-				alertprofile=(List<AlertProfile>) crt.list();
-				return alertprofile.get(0);
-				} 
-				else
-				{
-					return alertprofile.get(0);
-				}
-			}
-			catch(Exception e)
-			{
-				System.out.println(e.getStackTrace());
-				return null;
-			}
-		}
-
+	
 		public Boolean deleteAddress( int contactId)
 		{
 			try {
@@ -106,7 +80,7 @@ public class AddressDao {
 				Session session = QrSessionFactory.startTransaction();
 				session.evict(address);
 				session.update(address);
-				alertprofile=matchProfile(address,address.getContact().getAccount().getId(), session);
+				alertprofile=(AlertProfile) AlertProfileDao.matchProfile(address,address.getContact().getAccount().getId());
 				session.flush();
 				session.clear();
 				QrSessionFactory.endTransaction(session);

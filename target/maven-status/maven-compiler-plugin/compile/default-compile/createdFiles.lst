@@ -15,10 +15,7 @@ com\qr\repository\dao\AccountDao.class
 com\service\ContactServiceRemote.class
 com\qr\repository\factory\QrSessionFactory.class
 com\service\ServiceManager.class
-com\service\EmployeeServiceRemote.class
 com\service\AddressService.class
-com\service\EmployeeService.class
-com\gr\api\Employee.class
 com\gr\api\HelloWorld.class
 com\qr\repository\dao\AlertProfileDao.class
 com\qr\repository\entity\Account.class

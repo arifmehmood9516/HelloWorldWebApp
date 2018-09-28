@@ -8,7 +8,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.gr.api.Employee;
 import com.qr.repository.entity.Account;
 import com.qr.repository.entity.Address;
 import com.qr.repository.entity.AlertProfile;
@@ -18,15 +17,6 @@ import com.service.ServiceManager;
 @Path("/javalogin")
 public class ServiceLogin {
 	
-	@POST
-	@Path("/validate")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Employee validUser(Employee em) {
-		EmployeeServiceRemote br = (EmployeeServiceRemote ) ServiceManager.jndiLookup(EmployeeService.class);
-		return br.validUser(em);
-	}
-	
 	@GET
     @Path("/helloworld")
     public Response getHelloWorld() {
@@ -34,12 +24,6 @@ public class ServiceLogin {
         return Response.status(200).entity(value).build();
     }
     
-    @GET
-    @Path("")
-    public Response get() {
-        String value = "Hello World";
-        return Response.status(200).entity(value).build();
-    }
     
     @POST
     @Path("/addaccount")
@@ -65,11 +49,10 @@ public class ServiceLogin {
     @POST
     @Path("/addcontact")
     @Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
     public Response addContact(Contact contact) {
     	ContactServiceRemote br = (ContactServiceRemote ) ServiceManager.jndiLookup(ContactService.class);
-    	contact = br.addContact(contact);
-    	return Response.ok().entity(Boolean.TRUE).build();
+    	String message= "Your Address Matches Alert Profile "+ br.addContact(contact);
+    	return Response.ok().entity(message).build();
     }
     
     @POST
