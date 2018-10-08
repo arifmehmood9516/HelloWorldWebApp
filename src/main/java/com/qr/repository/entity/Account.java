@@ -13,6 +13,7 @@ public class Account implements Serializable {
 	private String name;
 	private String email;
 	private String city;
+	private String password;
 
 	private Set<Contact> contacts = new HashSet<Contact>(0);
 	private Set<AlertProfile> alertprofile = new HashSet<AlertProfile>(0);
@@ -66,5 +67,13 @@ public class Account implements Serializable {
 
 	public void setAlertprofile(Set<AlertProfile> alertprofile) {
 		this.alertprofile = alertprofile;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 }

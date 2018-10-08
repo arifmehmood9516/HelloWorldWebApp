@@ -26,9 +26,9 @@
         <property name="status" type="java.lang.String">
             <column name="STATUS" />
         </property>
-        <many-to-one name="account" class="com.qr.repository.entity.Account" fetch="select"  >
+        <!-- <many-to-one name="account" class="com.qr.repository.entity.Account" fetch="select"  >
             <column name="ACCOUNT_ID" />
-        </many-to-one>
+        </many-to-one> -->
         <one-to-one name="address" class="com.qr.repository.entity.Address" cascade="save-update,delete"></one-to-one>
     </class>
 </hibernate-mapping>

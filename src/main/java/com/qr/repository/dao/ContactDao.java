@@ -3,11 +3,12 @@ package com.qr.repository.dao;
 import java.util.List;
 
 import org.hibernate.Criteria;
-import org.hibernate.Query;
+import org.hibernate.Hibernate;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
+import com.mysql.jdbc.UpdatableResultSet;
 import com.qr.repository.entity.Account;
 import com.qr.repository.entity.Contact;
 import com.qr.repository.factory.QrSessionFactory;
@@ -18,7 +19,6 @@ public class ContactDao {
 	@SuppressWarnings({ "unchecked" })
 	public List<Contact> getAll(int accountId) {
 		
-	List<Contact> contacts=null;
 	Session session = QrSessionFactory.startTransaction();
 	String sql;
 	if(accountId!=0){
@@ -28,12 +28,40 @@ public class ContactDao {
 		sql = "SELECT * FROM contact";
 		}
 	
-	SQLQuery query = session.createSQLQuery(sql);
-	query.addEntity(Contact.class);
-	contacts = query.list();
+	SQLQuery query = session.createSQLQuery(sql).addEntity(Contact.class);
+	List<Contact> contacts = (List<Contact>) query.list();
+	
+	for(Contact contact: contacts) {
+		Hibernate.initialize(contact.getAddress());
+		Hibernate.initialize(contact.getAccount());
+		if(contact.getAccount() != null) {
+			contact.getAccount().setContacts(null);
+			contact.getAccount().setAlertprofile(null);
+		}
+		
+		if(contact.getAddress() != null) {
+			contact.getAddress().setContact(null);
+		}
+	}
 	QrSessionFactory.endTransaction(session);
 	return contacts;
 	}
+	
+	
+	public Contact getSingle(int contactId) {
+		
+		Session session = QrSessionFactory.startTransaction();
+		String sql;
+		sql= "SELECT * FROM qr.contact where id="+contactId;
+
+		
+		SQLQuery query = session.createSQLQuery(sql).addEntity(Contact.class);
+		Contact contact = (Contact) query.uniqueResult();
+		
+		QrSessionFactory.endTransaction(session);
+		return contact;
+	}
+	
 	
 	public Contact addContact(Contact contact)
 	{
@@ -44,7 +72,7 @@ public class ContactDao {
 			 Object result = criteria.uniqueResult();
 			 Account account=(Account) result;
 			contact.setAccount(account);
-			//account.getContacts().add(contact);
+			account.getContacts().add(contact);
 			session.save(contact);
 			QrSessionFactory.endTransaction(session);
 		}catch (Exception e) {
@@ -69,20 +97,39 @@ public class ContactDao {
 		return true;
 	}
 
-	public Boolean updateContact(Contact contact){
+	public Contact updateContact(Contact contact){
+		Contact contactb=getSingle(contact.getId());
+		contactb=updateValues(contactb,contact);
+		
 		try {
 			Session session = QrSessionFactory.startTransaction();
-			session.evict(contact);
-			session.update(contact);
+			session.evict(contactb);
+			session.update(contactb);
 			session.flush();
 			session.clear();
 			QrSessionFactory.endTransaction(session);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			return null;
 		}
-		return true;
+		return contactb;
 	}
+	
+	public Contact updateValues(Contact original, Contact updated)
+	{
 
+		original.getAddress().setCountry(updated.getAddress().getCountry());
+		original.getAddress().setState(updated.getAddress().getState());
+		original.getAddress().setStreetAddress(updated.getAddress().getStreetAddress());
+		original.getAddress().setCity(updated.getAddress().getCity());
+		original.setEmail(updated.getEmail());
+		original.setFirstName(updated.getFirstName());
+		original.setGender(updated.getGender());
+		original.setLastName(updated.getLastName());
+		original.setPhoneNumber(updated.getPhoneNumber());
+		original.setStatus(updated.getStatus());
+		return original;
+	}
+	
 }
 

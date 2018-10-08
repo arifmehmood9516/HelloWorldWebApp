@@ -3,6 +3,7 @@ com\service\AccountServiceRemote.class
 com\qr\repository\entity\Contact.class
 gr\com\BaseApplication.class
 com\qr\repository\entity\Address.class
+gr\com\rest\CORSFilter.class
 com\qr\repository\dao\AddressDao.class
 com\service\AlertProfileServiceRemote.class
 com\service\ContactService.class

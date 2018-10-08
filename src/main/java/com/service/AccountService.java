@@ -26,5 +26,18 @@ public class AccountService implements AccountServiceRemote {
 		return accountdao.deleteAccount(account.getId());
 	}
 
-	
+	@Override
+	public Account loginAccount(Account account) {
+		AccountDao accountdao=new AccountDao();
+		if(accountdao.validateAccount(account.getEmail()))
+		{
+			Account val=accountdao.validateLogin(account);
+			if(val != null) {
+				val.setContacts(null);
+				val.setAlertprofile(null);
+				return val;				
+			}
+		}
+		return null;
+	}
 }

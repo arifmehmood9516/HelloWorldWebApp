@@ -17,7 +17,10 @@
         <property name="city" type="java.lang.String">
             <column name="CITY" />
         </property>
-        <set name="contacts" table="CONTACT" cascade="save-update,delete" lazy="false" fetch="join" >
+        <property name="password" type="java.lang.String">
+            <column name="PASSWORD" />
+        </property>
+        <set name="contacts" table="CONTACT" cascade="save-update,delete" lazy="false" fetch="select" >
             <key>
                 <column name="ACCOUNT_ID" />
             </key>

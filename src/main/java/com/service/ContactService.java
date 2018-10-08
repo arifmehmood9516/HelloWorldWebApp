@@ -40,5 +40,27 @@ public class ContactService implements ContactServiceRemote {
 		return contactdao.deleteContact(contact.getId());
 	}
 
+	@Override
+	public List<Contact> getContacts(int accountId) {
+		ContactDao contactdao=new ContactDao();
+		return contactdao.getAll(accountId);
+	}
+
+	@Override
+	public String updateContact(Contact contact) {
+		ContactDao contactdao=new ContactDao();
+		contactdao.updateContact(contact);
+		List<AlertProfile> list=AlertProfileDao.matchProfile(contact.getAddress(), contact.getAccountId());
+		String profiles="";
+		int index=0;
+		while(list.size()>index)
+		{
+			profiles=profiles+list.get(index).getName();
+			index++;
+			profiles=((list.size()>index)?profiles+", ":profiles+".");
+		}
+		return profiles;
+	}
+
 	
 }

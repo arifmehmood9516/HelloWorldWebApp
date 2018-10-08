@@ -11,6 +11,7 @@ D:\Eclipse_workspace_arif\HelloWorldWebApp\src\main\java\com\qr\repository\entit
 D:\Eclipse_workspace_arif\HelloWorldWebApp\src\main\java\gr\com\BaseApplication.java
 D:\Eclipse_workspace_arif\HelloWorldWebApp\src\main\java\com\qr\repository\factory\QrSessionFactory.java
 D:\Eclipse_workspace_arif\HelloWorldWebApp\src\main\java\com\service\ServiceLogin.java
+D:\Eclipse_workspace_arif\HelloWorldWebApp\src\main\java\gr\com\rest\CORSFilter.java
 D:\Eclipse_workspace_arif\HelloWorldWebApp\src\main\java\com\qr\repository\dao\AddressDao.java
 D:\Eclipse_workspace_arif\HelloWorldWebApp\src\main\java\com\service\ContactService.java
 D:\Eclipse_workspace_arif\HelloWorldWebApp\src\main\java\com\service\AccountServiceRemote.java
